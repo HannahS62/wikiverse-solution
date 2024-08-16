@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import apiURL from "../api";
 
-const Form = ({ hideForm, fetchPages }) => {
+const CreateForm = ({ hideForm, fetchPages }) => {
   const [data, setData] = useState({
     title: "",
     content: "",
@@ -98,4 +98,4 @@ const Form = ({ hideForm, fetchPages }) => {
   );
 };
 
-export default Form;
+export default CreateForm;
