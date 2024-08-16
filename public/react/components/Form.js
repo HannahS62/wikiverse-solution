@@ -1,24 +1,42 @@
-import React, { useState } from 'react'
-import apiURL from '../api'
+import React, { useState } from "react";
+import apiURL from "../api";
 
-const Form = () => {
+const Form = ({ hideForm, fetchPages }) => {
   const [data, setData] = useState({
-    title: '',
-    content: '',
-    name: '',
-    email: '',
-    tags: ''
-  })
+    title: "",
+    content: "",
+    name: "",
+    email: "",
+    tags: "",
+  });
 
   const handleChange = (event) => {
     setData({
       ...data,
-      [event.target.name]: event.target.value
-    })
-  }
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    //Prevent the form from submitting to the server
+    event.preventDefault();
+    //Make a POST request to /api/wiki
+    await fetch(event.target.action, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // tells the server to expect json
+      },
+      body: JSON.stringify(data),
+    });
+
+    //fetch the updated list of articles
+    await fetchPages();
+    //Hide the form
+    hideForm();
+  };
 
   return (
-    <form action={`${apiURL}/wiki`} method="POST">
+    <form action={`${apiURL}/wiki`} method="POST" onSubmit={handleSubmit}>
       <p>
         <label htmlFor="title">Title</label>
         <input
@@ -77,7 +95,7 @@ const Form = () => {
         <button type="submit">Add page</button>
       </p>
     </form>
-  )
-}
+  );
+};
 
-export default Form
+export default Form;
