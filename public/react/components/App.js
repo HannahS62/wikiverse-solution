@@ -39,7 +39,9 @@ const App = () => {
 
   // If the currentPage state is set, shows the current page.
   if (currentPage) {
-    return <Page {...currentPage} navigate={navigate} />;
+    return (
+      <Page {...currentPage} navigate={navigate} fetchPages={fetchPages} />
+    );
   }
 
   // Otherwise, shows the home page.
